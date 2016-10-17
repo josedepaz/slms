@@ -1,0 +1,70 @@
+{
+    "server": {
+        "server": {
+            "debug": {
+                "$filter": "env",
+                "$base": {
+                    "request": [
+                        "error"
+                    ]
+                },
+                "$default": {
+                    "log": [
+                        "info",
+                        "error",
+                        "connection",
+                        "client"
+                    ]
+                },
+                "production": {
+                    "log": [
+                        "error"
+                    ]
+                }
+            }
+        },
+        "connections": {
+            "$filter": "env",
+            "$default": [
+                {
+                    "host": "localhost",
+                    "port": 4000
+                }
+            ],
+            "production": [
+                {
+                    "host": "localhost",
+                    "port": 5000
+                }
+            ]
+        },
+        "registrations": [
+        ]
+    },
+    "db": {
+        "$filter": "env",
+        "$default": {
+            "host": "45.55.70.219",
+            "port": 3308,
+            "user": "root",
+            "password": "jir0lab$08",
+            "database": "lmsdb"
+        },
+        "production": {
+            "host": "45.55.70.219",
+            "port": 3308,
+            "user": "root",
+            "password": "jir0lab$08",
+            "database": "lmsdb"
+        }
+    },
+    "context": {
+        "$filter": "env",
+        "$default": {
+            "basePath": ""
+        },
+        "production": {
+            "basePath": "users"
+        }
+    }
+}
