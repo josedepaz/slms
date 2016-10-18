@@ -5,7 +5,7 @@ Configure your environment
 Install node
 
 ```
-download from oficial page [http://nodejs.org/](http://nodejs.org/) 
+download from oficial page http://nodejs.org/
 ```
 
 Install npm
