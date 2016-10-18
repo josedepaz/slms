@@ -57,5 +57,13 @@ exports.updateUser = function (request, reply) {
 
 // Delete a existent user
 exports.deleteUser = function (request, reply) {
-    reply('Delete User');
+    const user = {
+        dbid = request.params.dbid
+    }
+    request.app.db.query('DELETE User WHERE dbid = :dbid', user, (err, result) => {
+        if (err) {
+            throw err;
+        }
+        reply(user);
+    });
 }
