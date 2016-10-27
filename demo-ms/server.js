@@ -13,6 +13,9 @@ const Manifest = config.server;
 const options = { relativeTo: __dirname };
 
 Glue.compose(Manifest, options, (err, server) => {
+    if (err){
+        throw err;
+    }
 
     const basePlugins = [
         {
