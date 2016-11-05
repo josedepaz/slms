@@ -1,0 +1,105 @@
+{
+	"variables": [],
+	"info": {
+		"name": "slms",
+		"_postman_id": "8b7009fc-cc9b-424e-e31d-409a35ee3c98",
+		"description": "demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "course-ms",
+			"description": "course",
+			"item": [
+				{
+					"name": "List courses",
+					"request": {
+						"url": "{{local}}/api/v1/courses/",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{institution:\"dos\"}"
+						},
+						"description": "GET list courses"
+					},
+					"response": []
+				},
+				{
+					"name": "Course by Id",
+					"request": {
+						"url": "{{local}}/api/v1/courses/",
+						"method": "GET",
+						"header": [
+							{
+								"key": "dbid",
+								"value": "1",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Course",
+					"request": {
+						"url": "{{local}}/api/v1/courses/1",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Course",
+					"request": {
+						"url": "{{local}}/api/v1/courses/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"institution\":1,\n  \"code\":\"HO\", \n  \"name\": \"hola\", \n  \"description\": \"test\" \n}\n\n\n"
+						},
+						"description": "Post"
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Course",
+					"request": {
+						"url": "{{local}}/api/v1/courses/",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dbid\":4,\n  \"institution\":1,\n  \"code\":\"OPEN\", \n  \"name\": \"Open English\", \n  \"description\": \"testeo\" \n}\n\n\n"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
