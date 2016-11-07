@@ -15,5 +15,5 @@ Lo primero antes de iniciar un desarrollo:
 * utilizamos el siguiente comando:
 `git push origin [nombre del branch]`
 * luego en github le damos crear pull request y seleccionamos el branch
-* cuando este terminado, pasamos la tarea de `trello/github` a code review y le indicamos a los demas que hagan una revisión rapida para que: 1) vayamos en sintonia con la codificación y podamos encontrar errores de manera temprana
+* cuando este terminado, pasamos la tarea de `trello/github` a code review y le indicamos a los demas que hagan una revisión rapida para que vayamos en sintonia con la codificación y podamos encontrar errores de manera temprana
 * una vez los demas digan "Me parece bien" le hacemos merge del branch a master
