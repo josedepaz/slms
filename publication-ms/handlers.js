@@ -48,7 +48,7 @@ exports.updatePublication = function (request, reply) {
         activity: request.payload.activity
     }
 
-    request.app.db.query('UPDATE PUBLICATION SET (text= :text, state = :state, publicator= :publicator, course_instance= :course_instance, activity= :activity WHERE dbid = :dbid)', publication, (err, result) => {
+    request.app.db.query('UPDATE PUBLICATION SET (text = :text, state = :state, publicator = :publicator, course_instance = :course_instance, activity = :activity WHERE dbid = :dbid)', publication, (err, result) => {
         if (err) {
             throw err;
         }
@@ -62,9 +62,9 @@ exports.updatePublication = function (request, reply) {
 // Delete a publication
 exports.deletePublication = function (request, reply) {
     const publication = {
-        dbid: request.params.dbid
+        dbid: request.params.dbid,
+        state: 'DELETED'
     };
-    var state = 'DELETED';
 
     request.app.db.query('UPDATE PUBLICATION SET state = :state WHERE dbid = :dbid', publication, (err, result) => {
         if (err) {
@@ -77,8 +77,11 @@ exports.deletePublication = function (request, reply) {
 
 // Find all publications
 exports.findAllPublications = function (request, reply) {
-    var state= 'ACTIVE';
-    request.app.db.query('SELECT * FROM PUBlICATION WHERE state = :state', (err, rows, fields) => {
+    const publication = {
+        state: 'ACTIVE'
+    };
+
+    request.app.db.query('SELECT * FROM PUBlICATION WHERE state = :state', publication, (err, rows, fields) => {
         if (err) {
             throw err;
         }
@@ -88,8 +91,11 @@ exports.findAllPublications = function (request, reply) {
 
 // Find all publications by dbid
 exports.findPublicationByDbid = function (request, reply) {
-    var state= 'ACTIVE';
-    request.app.db.query('SELECT * FROM PUBlICATION WHERE state = :state AND dbid = :dbid', (err, rows, fields) => {
+    const publication = {
+        dbid: request.params.dbid,
+        state: 'ACTIVE'
+    };
+    request.app.db.query('SELECT * FROM PUBlICATION WHERE state = :state AND dbid = :dbid', publication, (err, rows, fields) => {
         if (err) {
             throw err;
         }
