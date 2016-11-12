@@ -32,10 +32,6 @@
                 }
             ],
             "production": [
-                {
-                    "host": "localhost",
-                    "port": 5000
-                }
             ]
         },
         "registrations": [

@@ -4,8 +4,12 @@ const Joi = require('joi');
 
 exports.Validator = Joi.object().keys({
     dbid: Joi.number().optional(),
+    text: Joi.string().optional(),
+    state: Joi.string().optional(),
+    date: Joi.string().optional(),
     publicator: Joi.string().required(),
-    course_instance: Joi.number().required()
+    course_instance: Joi.number().required(),
+    activity: Joi.number().optional()
 });
 
 
@@ -20,7 +24,7 @@ exports.createPublication = function (request, reply) {
         activity: request.payload.activity
     }
 
-    request.app.db.query('INSERT INTO PUBICATION (text, state, date, publicator, course_instance, activity) VALUES (:text, :state, :date, :publicator, :course_instance, :activity)', publication, (err, result) => {
+    request.app.db.query('INSERT INTO PUBlICATION (text, state, date, publicator, course_instance, activity) VALUES (:text, :state, :date, :publicator, :course_instance, :activity)', publication, (err, result) => {
         if (err) {
             throw err;
         }
@@ -57,22 +61,24 @@ exports.updatePublication = function (request, reply) {
 
 // Delete a publication
 exports.deletePublication = function (request, reply) {
-    const user = {
+    const publication = {
         dbid: request.params.dbid
     };
+    var state = 'DELETED';
 
-    request.app.db.query("UPDATE PUBLICATION SET state = 'DELETED' WHERE dbid = :dbid", user, (err, result) => {
+    request.app.db.query('UPDATE PUBLICATION SET state = :state WHERE dbid = :dbid', publication, (err, result) => {
         if (err) {
             throw err;
         }
-        reply(user);
+        reply(publication);
     });
 }
 
 
 // Find all publications
 exports.findAllPublications = function (request, reply) {
-    request.app.db.query("SELECT * FROM PUBICATION WHERE state = 'ACTIVE'", (err, rows, fields) => {
+    var state= 'ACTIVE';
+    request.app.db.query('SELECT * FROM PUBlICATION WHERE state = :state', (err, rows, fields) => {
         if (err) {
             throw err;
         }
@@ -82,7 +88,8 @@ exports.findAllPublications = function (request, reply) {
 
 // Find all publications by dbid
 exports.findPublicationByDbid = function (request, reply) {
-    request.app.db.query("SELECT * FROM PUBICATION WHERE state = 'ACTIVE' AND dbid = :dbid", (err, rows, fields) => {
+    var state= 'ACTIVE';
+    request.app.db.query('SELECT * FROM PUBlICATION WHERE state = :state AND dbid = :dbid', (err, rows, fields) => {
         if (err) {
             throw err;
         }
