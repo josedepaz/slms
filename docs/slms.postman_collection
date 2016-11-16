@@ -28,12 +28,12 @@
 				{
 					"name": "Course by Id",
 					"request": {
-						"url": "{{local}}/api/v1/courses/",
+						"url": "{{local}}/api/v1/courses/4",
 						"method": "GET",
 						"header": [
 							{
 								"key": "dbid",
-								"value": "1",
+								"value": "4",
 								"description": ""
 							}
 						],
@@ -48,7 +48,7 @@
 				{
 					"name": "Course",
 					"request": {
-						"url": "{{local}}/api/v1/courses/1",
+						"url": "{{local}}/api/v1/courses/6",
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -73,7 +73,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"institution\":1,\n  \"code\":\"HO\", \n  \"name\": \"hola\", \n  \"description\": \"test\" \n}\n\n\n"
+							"raw": "{\n  \"institution\":1,\n  \"code\":\"HO\", \n  \"name\": \"hola\", \n  \"description\": \"test\", \n  \"state\": 2\n}\n\n\n"
 						},
 						"description": "Post"
 					},
@@ -93,7 +93,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"dbid\":4,\n  \"institution\":1,\n  \"code\":\"OPEN\", \n  \"name\": \"Open English\", \n  \"description\": \"testeo\" \n}\n\n\n"
+							"raw": "{\n  \"dbid\":4,\n  \"institution\":1,\n  \"code\":\"OPEN\", \n  \"name\": \"Open English\", \n  \"description\": \"testeo\",\n  \"state\": 2\n}\n\n\n"
 						},
 						"description": ""
 					},
