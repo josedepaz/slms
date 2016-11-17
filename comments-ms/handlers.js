@@ -9,7 +9,7 @@ exports.Validator = Joi.object().keys({
     state: Joi.string().optional(),
     date: Joi.string().optional(),
     parent: Joi.number().optional(),
-    publication: Joi.number().required()    
+    publication: Joi.number().required()
 });
 
 
@@ -62,10 +62,11 @@ exports.updateComment = function (request, reply) {
 // Delete a COMMENT
 exports.deleteComment = function (request, reply) {
     const params = {
-        dbid: request.params.dbid
+        dbid: request.params.dbid,
+        state: 'DELETED'
     };
 
-    request.app.db.query("UPDATE COMMENT SET state = 'DELETED' WHERE dbid = :dbid", params, (err, result) => {
+    request.app.db.query('UPDATE COMMENT SET state = :state WHERE dbid = :dbid', params, (err, result) => {
         if (err) {
             throw err;
         }
@@ -78,9 +79,10 @@ exports.deleteComment = function (request, reply) {
 exports.findAllComments = function (request, reply) {
     const pagination = {
         limit: request.query.limit,
-        offset: request.query.offset
-    }    
-    request.app.db.query("SELECT * FROM COMMENT WHERE state = 'ACTIVE' LIMIT :limit, :offset", pagination,(err, rows, fields) => {
+        offset: request.query.offset,
+        state: 'ACTIVE'
+    }
+    request.app.db.query('SELECT * FROM COMMENT WHERE state = :state LIMIT :limit, :offset', pagination, (err, rows, fields) => {
         if (err) {
             throw err;
         }
@@ -90,7 +92,11 @@ exports.findAllComments = function (request, reply) {
 
 // Find all COMMENTs by dbid
 exports.findCommentByDbid = function (request, reply) {
-    request.app.db.query("SELECT * FROM COMMENT WHERE state = 'ACTIVE' AND dbid = :dbid", (err, rows, fields) => {
+    const params = {
+        dbid: request.params.dbid,
+        state: 'ACTIVE'
+    };
+    request.app.db.query('SELECT * FROM COMMENT WHERE state = :state AND dbid = :dbid', params, (err, rows, fields) => {
         if (err) {
             throw err;
         }
