@@ -4,7 +4,12 @@ const Joi = require('joi');
 
 exports.Validator = Joi.object().keys({
     dbid: Joi.number().optional(),
-    user: Joi.string().required()
+    user: Joi.number().required(),
+    text: Joi.string().optional(),
+    state: Joi.string().optional(),
+    date: Joi.string().optional(),
+    parent: Joi.number().optional(),
+    publication: Joi.number().required()
 });
 
 
