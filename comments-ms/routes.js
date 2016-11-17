@@ -35,7 +35,15 @@ module.exports = [
     {
         path: '/',
         method: 'GET',
-        handler: Handlers.findAllComments
+        handler: Handlers.findAllComments,
+        config:{
+            validate: {
+               query: {
+                    limit: Joi.number().integer().min(1).max(100).default(10),
+                    offset: Joi.number().integer().min(1).max(100).default(10)
+                }
+            }
+        }
     },
     {
         path: '/{dbid}',

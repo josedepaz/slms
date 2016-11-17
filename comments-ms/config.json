@@ -61,10 +61,10 @@
     "context": {
         "$filter": "env",
         "$default": {
-            "basePath": "api/v1/comment"
+            "basePath": "api/v1/comments"
         },
         "production": {
-            "basePath": "api/v1/comment"
+            "basePath": "api/v1/comments"
         }
     }
 }

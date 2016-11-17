@@ -9,13 +9,13 @@ exports.Validator = Joi.object().keys({
     state: Joi.string().optional(),
     date: Joi.string().optional(),
     parent: Joi.number().optional(),
-    publication: Joi.number().required()
+    publication: Joi.number().required()    
 });
 
 
 // Create a new COMMENT
 exports.createComment = function (request, reply) {
-    const COMMENT = {
+    const comment = {
         text: request.payload.text,
         state: request.payload.state,
         date: request.payload.date,
@@ -24,21 +24,21 @@ exports.createComment = function (request, reply) {
         publication: request.payload.publication
     }
 
-    request.app.db.query('INSERT INTO COMMENT (text, state, date, user, parent, publication) VALUES (:text, :state, :date, :user, :parent, :publication)', COMMENT, (err, result) => {
+    request.app.db.query('INSERT INTO COMMENT (text, state, date, user, parent, publication) VALUES (:text, :state, :date, :user, :parent, :publication)', comment, (err, result) => {
         if (err) {
             throw err;
         }
         if (result.insertId) {
-            COMMENT.dbid = result.insertId;
+            comment.dbid = result.insertId;
         }
-        reply(COMMENT);
+        reply(comment);
     });
 }
 
 
 // Update a COMMENT
 exports.updateComment = function (request, reply) {
-    const COMMENT = {
+    const comment = {
         dbid: request.params.dbid,
         text: request.payload.text,
         state: request.payload.state,
@@ -48,24 +48,24 @@ exports.updateComment = function (request, reply) {
         publication: request.payload.publication
     }
 
-    request.app.db.query('UPDATE COMMENT SET (text= :text, state = :state, publicator= :publicator, course_instance= :course_instance, activity= :activity WHERE dbid = :dbid)', COMMENT, (err, result) => {
+    request.app.db.query('UPDATE COMMENT SET (text= :text, state = :state, publicator= :publicator, course_instance= :course_instance, activity= :activity WHERE dbid = :dbid)', comment, (err, result) => {
         if (err) {
             throw err;
         }
         if (result.insertId) {
-            COMMENT.dbid = result.insertId;
+            comment.dbid = result.insertId;
         }
-        reply(COMMENT);
+        reply(comment);
     });
 }
 
 // Delete a COMMENT
 exports.deleteComment = function (request, reply) {
-    const user = {
+    const params = {
         dbid: request.params.dbid
     };
 
-    request.app.db.query("UPDATE COMMENT SET state = 'DELETED' WHERE dbid = :dbid", user, (err, result) => {
+    request.app.db.query("UPDATE COMMENT SET state = 'DELETED' WHERE dbid = :dbid", params, (err, result) => {
         if (err) {
             throw err;
         }
@@ -76,7 +76,11 @@ exports.deleteComment = function (request, reply) {
 
 // Find all COMMENTs
 exports.findAllComments = function (request, reply) {
-    request.app.db.query("SELECT * FROM COMMENT WHERE state = 'ACTIVE'", (err, rows, fields) => {
+    const pagination = {
+        limit: request.query.limit,
+        offset: request.query.offset
+    }    
+    request.app.db.query("SELECT * FROM COMMENT WHERE state = 'ACTIVE' LIMIT :limit, :offset", pagination,(err, rows, fields) => {
         if (err) {
             throw err;
         }
@@ -86,7 +90,7 @@ exports.findAllComments = function (request, reply) {
 
 // Find all COMMENTs by dbid
 exports.findCommentByDbid = function (request, reply) {
-    request.app.db.query("SELECT * FROM PUBICATION WHERE state = 'ACTIVE' AND dbid = :dbid", (err, rows, fields) => {
+    request.app.db.query("SELECT * FROM COMMENT WHERE state = 'ACTIVE' AND dbid = :dbid", (err, rows, fields) => {
         if (err) {
             throw err;
         }
