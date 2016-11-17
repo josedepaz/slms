@@ -40,7 +40,7 @@ module.exports = [
             validate: {
                 query: {
                     limit: Joi.number().integer().min(1).max(100).default(0),
-                    offset: Joi.number().integer().min(1).max(100).default(10)
+                    offset: Joi.number().integer().min(1).max(100).default(100)
                 }
             }
         }
