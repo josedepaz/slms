@@ -6,9 +6,17 @@ const Handlers = require('./handlers');
 
 module.exports = [
     {
-        path: '/',
+        path: '/{limit}/{offset}',
         method: 'GET',
-        handler: Handlers.findAllCourses
+        handler: Handlers.findAllCourses,
+        config: {
+            validate: {
+                params: {
+                    limit: Joi.number().integer().min(0).max(100).default(0),
+                    offset: Joi.number().integer().min(1).max(100).default(100)
+                }
+            }
+        }
     },
     {
         path: '/{dbid}',

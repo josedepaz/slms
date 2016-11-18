@@ -13,7 +13,12 @@ exports.Validator = Joi.object().keys({
 
 // Find all Courses
 exports.findAllCourses = function (request, reply) {
-    request.app.db.query('SELECT * FROM COURSE', (err, rows, fields) => {
+    const pagination = {
+        limit: request.params.limit,
+        offset: request.params.offset,
+        state: 'ACTIVE'
+    }
+    request.app.db.query('SELECT * FROM COURSE WHERE state = :state LIMIT :limit, :offset', pagination, (err, rows, fields) => {
         if (err) {
             throw err;
         }
