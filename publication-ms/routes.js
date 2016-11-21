@@ -35,7 +35,15 @@ module.exports = [
     {
         path: '/',
         method: 'GET',
-        handler: Handlers.findAllPublications
+        handler: Handlers.findAllPublications,
+        config: {
+            validate: {
+                query: {
+                    limit: Joi.number().integer().min(1).max(100).default(0),
+                    offset: Joi.number().integer().min(1).max(100).default(100)
+                }
+            }
+        }
     },
     {
         path: '/{dbid}',

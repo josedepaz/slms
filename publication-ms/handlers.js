@@ -17,14 +17,13 @@ exports.Validator = Joi.object().keys({
 exports.createPublication = function (request, reply) {
     const publication = {
         text: request.payload.text,
-        state: request.payload.state,
-        date: request.payload.date,
+        state: 'ACTIVE',
         publicator: request.payload.publicator,
         course_instance: request.payload.course_instance,
         activity: request.payload.activity
     }
 
-    request.app.db.query('INSERT INTO PUBlICATION (text, state, date, publicator, course_instance, activity) VALUES (:text, :state, :date, :publicator, :course_instance, :activity)', publication, (err, result) => {
+    request.app.db.query('INSERT INTO PUBLICATION (text, state, date, publicator, course_instance, activity) VALUES (:text, :state, CURDATE(), :publicator, :course_instance, :activity)', publication, (err, result) => {
         if (err) {
             throw err;
         }
@@ -81,7 +80,7 @@ exports.findAllPublications = function (request, reply) {
         state: 'ACTIVE'
     };
 
-    request.app.db.query('SELECT * FROM PUBlICATION WHERE state = :state', publication, (err, rows, fields) => {
+    request.app.db.query('SELECT * FROM PUBLICATION WHERE state = :state', publication, (err, rows, fields) => {
         if (err) {
             throw err;
         }
@@ -95,7 +94,7 @@ exports.findPublicationByDbid = function (request, reply) {
         dbid: request.params.dbid,
         state: 'ACTIVE'
     };
-    request.app.db.query('SELECT * FROM PUBlICATION WHERE state = :state AND dbid = :dbid', publication, (err, rows, fields) => {
+    request.app.db.query('SELECT * FROM PUBLICATION WHERE state = :state AND dbid = :dbid', publication, (err, rows, fields) => {
         if (err) {
             throw err;
         }
