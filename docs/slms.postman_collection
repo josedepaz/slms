@@ -14,7 +14,7 @@
 				{
 					"name": "List courses",
 					"request": {
-						"url": "{{local}}/api/v1/courses/",
+						"url": "{{local}}/api/v1/courses/?limit=0&offset=1",
 						"method": "GET",
 						"header": [],
 						"body": {
