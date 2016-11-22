@@ -7,7 +7,7 @@ exports.Validator = Joi.object().keys({
     user: Joi.number().required(),
     text: Joi.string().optional(),
     state: Joi.string().optional(),
-    date: Joi.string().optional(),
+    date: Joi.date().optional(),
     parent: Joi.number().optional(),
     publication: Joi.number().required()
 });
@@ -48,7 +48,7 @@ exports.updateComment = function (request, reply) {
         publication: request.payload.publication
     }
 
-    request.app.db.query('UPDATE COMMENT SET text= :text, state = :state, publicator= :publicator, course_instance= :course_instance, activity= :activity ' +
+    request.app.db.query('UPDATE COMMENT SET text= :text, state = :state, date = :date, user = :user, parent = :parent, publication = :publication ' +
         'WHERE dbid = :dbid', comment, (err, result) => {
             if (err) {
                 throw err;
@@ -95,11 +95,11 @@ exports.findAllComments = function (request, reply) {
 
 // Find all COMMENTs by dbid
 exports.findCommentByDbid = function (request, reply) {
-    const params = {
+    const comment = {
         dbid: request.params.dbid,
         state: 'ACTIVE'
     };
-    request.app.db.query('SELECT * FROM COMMENT WHERE state = :state AND dbid = :dbid', params, (err, rows, fields) => {
+    request.app.db.query('SELECT * FROM COMMENT WHERE state = :state AND dbid = :dbid', comment, (err, rows, fields) => {
         if (err) {
             throw err;
         }
