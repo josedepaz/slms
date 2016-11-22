@@ -48,30 +48,32 @@ exports.updateComment = function (request, reply) {
         publication: request.payload.publication
     }
 
-    request.app.db.query('UPDATE COMMENT SET (text= :text, state = :state, publicator= :publicator, course_instance= :course_instance, activity= :activity WHERE dbid = :dbid)', comment, (err, result) => {
-        if (err) {
-            throw err;
-        }
-        if (result.insertId) {
-            comment.dbid = result.insertId;
-        }
-        reply(comment);
-    });
+    request.app.db.query('UPDATE COMMENT SET text= :text, state = :state, publicator= :publicator, course_instance= :course_instance, activity= :activity ' +
+        'WHERE dbid = :dbid', comment, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (result.insertId) {
+                comment.dbid = result.insertId;
+            }
+            reply(comment);
+        });
 }
 
 // Delete a COMMENT
 exports.deleteComment = function (request, reply) {
-    const params = {
+    const comment = {
         dbid: request.params.dbid,
         state: 'DELETED'
     };
 
-    request.app.db.query('UPDATE COMMENT SET state = :state WHERE dbid = :dbid', params, (err, result) => {
-        if (err) {
-            throw err;
-        }
-        reply(user);
-    });
+    request.app.db.query('UPDATE COMMENT SET state = :state ' +
+        'WHERE dbid = :dbid', comment, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            reply(comment);
+        });
 }
 
 
@@ -82,12 +84,13 @@ exports.findAllComments = function (request, reply) {
         offset: request.query.offset,
         state: 'ACTIVE'
     }
-    request.app.db.query('SELECT * FROM COMMENT WHERE state = :state LIMIT :limit, :offset', pagination, (err, rows, fields) => {
-        if (err) {
-            throw err;
-        }
-        reply(rows);
-    });
+    request.app.db.query('SELECT * FROM COMMENT ' +
+        'WHERE state = :state LIMIT :limit, :offset', pagination, (err, rows, fields) => {
+            if (err) {
+                throw err;
+            }
+            reply(rows);
+        });
 }
 
 // Find all COMMENTs by dbid
