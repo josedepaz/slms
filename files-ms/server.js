@@ -19,8 +19,12 @@ Glue.compose(Manifest, options, (err, server) => {
 
     const basePlugins = [
         {
-            register: require('./libs/db'),
+            register: require('./libs/db'),            
             options: { config: config.db}
+        }, 
+        {
+            register: require('inert'),
+            options: {}
         }
     ];
 

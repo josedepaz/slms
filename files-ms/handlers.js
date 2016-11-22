@@ -1,10 +1,10 @@
 'use strict';
 
-const Joi = require('joi');
 const dateFormat = require('dateformat');
-const uuid = require('node-uuid');
 const fs = require('fs');
+const Joi = require('joi');
 const mkdirp = require('mkdirp');
+const uuid = require('node-uuid');
 
 exports.Validator = Joi.object().keys({
     dbid: Joi.number().required(),
@@ -45,7 +45,9 @@ exports.findFileByDbid = function (request, reply) {
     });
 
 }
-
+/**
+* Retorna el archivo cargado o 404 si no esta en el sistema.
+*/
 exports.downloadFileByDbid = function (request, reply) {
     const filters = {
         state: 'ACTIVE',
@@ -57,7 +59,11 @@ exports.downloadFileByDbid = function (request, reply) {
         if (err) {
             throw err;
         }
-        reply.file(rows[0].fileLocation);
+        if(rows.length > 0){
+            reply.file(rows[0].file_location, {filename: rows[0].name});
+        } else {
+            reply("Not found").code(404);
+        }
     });
 }
 
@@ -75,19 +81,19 @@ exports.uploadFile = function (request, reply) {
     const fileName = uuid.v1() + '.bin';
     const payloadFile = request.payload['file'];
     
-    file.fileLocation = directory + fileName;
+    file.location = directory + fileName;
     file.name = payloadFile.hapi.filename;
     file.description = "auto-generated";
-    file.uploadDate = new Date();
+    file.date = new Date();
     file.state = 'ACTIVE';
     mkdirp(directory, function(err) { 
         if (err) {
             throw err;
         }
-        const wstream = fs.createWriteStream(file.fileLocation);
+        const wstream = fs.createWriteStream(file.location);
         payloadFile.pipe(wstream);
         
-        request.app.db.query('INSERT INTO File (name, description, file_location, upload_date, state) VALUES (:name, :description, :location, :date, :state)', file, (err, result) => {
+        request.app.db.query('INSERT INTO FILE (name, description, file_location, upload_date, state) VALUES (:name, :description, :location, :date, :state)', file, (err, result) => {
             if (err) {
                 throw err;
             }
