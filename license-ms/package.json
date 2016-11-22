@@ -1,0 +1,20 @@
+{
+  "name": "license-ms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "eprado",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^4.2.0",
+    "confidence": "^3.0.2",
+    "dotenv": "^2.0.0",
+    "glue": "^4.0.0",
+    "hapi": "^15.1.1",
+    "joi": "^9.1.1",
+    "mysql": "^2.11.1"
+  }
+}
