@@ -77,7 +77,9 @@ exports.deletePublication = function (request, reply) {
 // Find all publications
 exports.findAllPublications = function (request, reply) {
     const publication = {
-        state: 'ACTIVE'
+        state: 'ACTIVE',
+        limit: request.query.limit,
+        offset: request.query.offset
     };
 
     request.app.db.query('SELECT * FROM PUBLICATION WHERE state = :state', publication, (err, rows, fields) => {
