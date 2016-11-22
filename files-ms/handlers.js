@@ -119,7 +119,7 @@ exports.deleteFile = function (request, reply) {
         if (err) {
             throw err;
         }
-        reply(user);
+        reply(params);
     });
 
 }
