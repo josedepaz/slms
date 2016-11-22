@@ -7,18 +7,18 @@ exports.Validator = Joi.object().keys({
     institution: Joi.number().required(),
     code: Joi.string().required(),
     name: Joi.string().required(),
-    description: Joi.string().required(),
     state: Joi.number().required()
 });
 
 // Find all Courses
 exports.findAllCourses = function (request, reply) {
     const pagination = {
-        limit: request.params.limit,
-        offset: request.params.offset,
+        limit: request.query.limit,
+        offset: request.query.offset,
         state: 'ACTIVE'
     }
     request.app.db.query('SELECT * FROM COURSE WHERE state = :state LIMIT :limit, :offset', pagination, (err, rows, fields) => {
+        
         if (err) {
             throw err;
         }
@@ -26,7 +26,7 @@ exports.findAllCourses = function (request, reply) {
     });
 }
 
-// Find Couse by dbid
+// Find Course by dbid
 exports.findCourseByDbid = function (request, reply) {
 
     const course = { dbid: request.params.dbid };
