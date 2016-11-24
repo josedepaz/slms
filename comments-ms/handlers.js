@@ -7,7 +7,7 @@ exports.Validator = Joi.object().keys({
     user: Joi.number().required(),
     text: Joi.string().optional(),
     state: Joi.string().optional(),
-    date: Joi.date().optional(),
+    date: Joi.string().optional(),
     parent: Joi.number().optional(),
     publication: Joi.number().required()
 });
@@ -24,7 +24,8 @@ exports.createComment = function (request, reply) {
         publication: request.payload.publication
     }
 
-    request.app.db.query('INSERT INTO COMMENT (text, state, date, user, parent, publication) VALUES (:text, :state, :date, :user, :parent, :publication)', comment, (err, result) => {
+    request.app.db.query('INSERT INTO COMMENT (text, state, date, user, parent, publication) '+
+    'VALUES (:text, :state, :date, :user, :parent, :publication)', comment, (err, result) => {
         if (err) {
             throw err;
         }
