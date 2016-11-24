@@ -4,7 +4,7 @@ const Joi = require('joi');
 
 exports.Validator = Joi.object().keys({
     dbid: Joi.number().optional(),
-    validity_start: Joi.date().required(),
+    validity_start: Joi.date().optional(),
     validity_end: Joi.date().optional(),
     licence_type: Joi.number().optional(),
     allowed_users: Joi.string().optional(),
@@ -33,7 +33,6 @@ exports.createLicense = function (request, reply) {
             reply(license);
         });
 }
-
 
 // Update a LICENSE
 exports.updateLicense = function (request, reply) {
@@ -74,8 +73,9 @@ exports.deleteLicense = function (request, reply) {
 }
 
 
-// Find all LICENSEs
-exports.findAllLicenses = function (request, reply) {
+
+// Find all LICENSES
+exports.findAllLicense = function (request, reply) {
     const pagination = {
         limit: request.query.limit,
         offset: request.query.offset
@@ -88,12 +88,74 @@ exports.findAllLicenses = function (request, reply) {
     });
 }
 
-// Find all LICENSEs by dbid
+
+// Find LICENSE by dbid
 exports.findLicenseByDbid = function (request, reply) {
     const params = {
         dbid: request.params.dbid
     };
     request.app.db.query('SELECT * FROM LICENSE ' +
+        'WHERE dbid = :dbid', params, (err, rows, fields) => {
+            if (err) {
+                throw err;
+            }
+            reply(rows);
+        });
+}
+// Create a new LICENSE_TYPE
+exports.createLicenseType = function (request, reply) {
+    const licenseType = {
+        name: request.payload.name,
+        description: request.payload.description,
+        licence_type: request.payload.licence_type,
+        allowed_users: request.payload.allowed_users
+        
+    }
+
+    request.app.db.query('INSERT INTO LICENSE_TYPE (name, description, licence_type, allowed_user) ' +
+        'VALUES (:name, :description, :licence_type, :allowed_users)', licenseType, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (result.insertId) {
+                licenseType.dbid = result.insertId;
+            }
+            reply(licenseType);
+        });
+}
+// Delete a LICENSE_TYPE
+exports.deleteLicenseType = function (request, reply) {
+    const licenseType = {
+        dbid: request.params.dbid
+    };
+
+    request.app.db.query('DELETE LICENSE_TYPE ' +
+        ' WHERE dbid = :dbid', licenseType, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            reply(licenseType);
+        });
+}
+// Find all LICENSE_TYPE
+exports.findAllLicenseType = function (request, reply) {
+    const pagination = {
+        limit: request.query.limit,
+        offset: request.query.offset
+    }
+    request.app.db.query('SELECT * FROM LICENSE_TYPE LIMIT :limit, :offset', pagination, (err, rows, fields) => {
+        if (err) {
+            throw err;
+        }
+        reply(rows);
+    });
+}
+// Find LICENSE_TYPE by dbid
+exports.findLicenseTypeByDbid = function (request, reply) {
+    const params = {
+        dbid: request.params.dbid
+    };
+    request.app.db.query('SELECT * FROM LICENSE_TYPE ' +
         'WHERE dbid = :dbid', params, (err, rows, fields) => {
             if (err) {
                 throw err;

@@ -61,10 +61,10 @@
     "context": {
         "$filter": "env",
         "$default": {
-            "basePath": "api/v1/licenses"
+            "basePath": "api/v1/"
         },
         "production": {
-            "basePath": "api/v1/licenses"
+            "basePath": "api/v1/"
         }
     }
 }
