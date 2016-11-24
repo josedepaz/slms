@@ -6,22 +6,27 @@ const Handlers = require('./handlers');
 
 module.exports = [
     {
-        path: 'licences/',
+        path: 'licenses/',
         method: 'POST',
         handler: Handlers.createLicense,
         config: {
             validate: {
-                payload: Handlers.Validator
+                payload: Handlers.ValidatorLicense
             }
         }
     },
     {
-        path: 'licences/{dbid}',
+        path: 'licenses/{dbid}',
         method: 'PUT',
-        handler: Handlers.updateLicense
+        handler: Handlers.updateLicense,
+        config: {
+            validate: {
+                payload: Handlers.ValidatorLicense
+            }
+        }
     },
     {
-        path: 'licences/{dbid}',
+        path: 'licenses/{dbid}',
         method: 'DELETE',
         handler: Handlers.deleteLicense,
         config: {
@@ -33,7 +38,7 @@ module.exports = [
         }
     },
     {
-        path: 'licences/',
+        path: 'licenses/',
         method: 'GET',
         handler: Handlers.findAllLicense,
         config: {
@@ -46,7 +51,7 @@ module.exports = [
         }
     },
     {
-        path: 'licences/{dbid}',
+        path: 'licenses/{dbid}',
         method: 'GET',
         handler: Handlers.findLicenseByDbid,
         config: {
@@ -58,18 +63,28 @@ module.exports = [
         }
     },
     {
-        path: 'licence-types/',
+        path: 'license-types/',
         method: 'POST',
         handler: Handlers.createLicenseType,
         config: {
             validate: {
-                payload: Handlers.Validator
+                payload: Handlers.ValidatorLicenseType
             }
         }
     },
-    
     {
-        path: 'licence-types/{dbid}',
+        path: 'license-types/{dbid}',
+        method: 'PUT',
+        handler: Handlers.updateLicenseType,
+        config: {
+            validate: {
+                payload: Handlers.ValidatorLicenseType
+            }
+        }
+    },
+
+    {
+        path: 'license-types/{dbid}',
         method: 'DELETE',
         handler: Handlers.deleteLicenseType,
         config: {
@@ -81,7 +96,7 @@ module.exports = [
         }
     },
     {
-        path: 'licence-types/',
+        path: 'license-types/',
         method: 'GET',
         handler: Handlers.findAllLicenseType,
         config: {
@@ -94,7 +109,7 @@ module.exports = [
         }
     },
     {
-        path: 'licence-types/{dbid}',
+        path: 'license-types/{dbid}',
         method: 'GET',
         handler: Handlers.findLicenseTypeByDbid,
         config: {

@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 
-exports.Validator = Joi.object().keys({
+exports.ValidatorLicense = Joi.object().keys({
     dbid: Joi.number().optional(),
     validity_start: Joi.date().optional(),
     validity_end: Joi.date().optional(),
@@ -102,6 +102,15 @@ exports.findLicenseByDbid = function (request, reply) {
             reply(rows);
         });
 }
+
+
+exports.ValidatorLicenseType = Joi.object().keys({
+    dbid: Joi.number().optional(),
+    name: Joi.string().optional(),
+    description: Joi.string().optional(),
+    licence_type: Joi.number().optional(),
+    allowed_users: Joi.string().optional()
+});
 // Create a new LICENSE_TYPE
 exports.createLicenseType = function (request, reply) {
     const licenseType = {
@@ -109,11 +118,33 @@ exports.createLicenseType = function (request, reply) {
         description: request.payload.description,
         licence_type: request.payload.licence_type,
         allowed_users: request.payload.allowed_users
-        
+
     }
 
     request.app.db.query('INSERT INTO LICENSE_TYPE (name, description, licence_type, allowed_user) ' +
         'VALUES (:name, :description, :licence_type, :allowed_users)', licenseType, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (result.insertId) {
+                licenseType.dbid = result.insertId;
+            }
+            reply(licenseType);
+        });
+}
+
+// Update a LICENSE_TYPE
+exports.updateLicenseType = function (request, reply) {
+    const licenseType = {
+        dbid: request.params.dbid,
+        name: request.payload.name,
+        description: request.payload.description,
+        licence_type: request.payload.licence_type,
+        allowed_users: request.payload.allowed_users
+    }
+
+    request.app.db.query('UPDATE LICENSE SET name = :name, description = :description, licence_type = :licence_type, allowed_users = :allowed_users ' +
+        'WHERE dbid = :dbid', licenseType, (err, result) => {
             if (err) {
                 throw err;
             }
