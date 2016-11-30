@@ -2,13 +2,16 @@
 
 const Joi = require('joi');
 
-const Handlers = require('./handlers');
+//const Handlers = require('./handlers');
+const CoursesHandlers = require('./courses.handlers');
+const TagsHandlers = require('./tags.handlers');
 
 module.exports = [
+    //course
     {
-        path: '/',
+        path: '/courses/',
         method: 'GET',
-        handler: Handlers.findAllCourses,
+        handler: CoursesHandlers.findAllCourses,
         config: {
             validate: {
                 query: {
@@ -19,9 +22,9 @@ module.exports = [
         }
     },
     {
-        path: '/{dbid}',
+        path: '/courses/{dbid}',
         method: 'GET',
-        handler: Handlers.findCourseByDbid,
+        handler: CoursesHandlers.findCourseByDbid,
         config: {
             validate: {
                 params: {
@@ -31,29 +34,87 @@ module.exports = [
         }
     },
     {
-        path: '/',
+        path: '/courses/',
         method: 'POST',
-        handler: Handlers.createCourse,
+        handler: CoursesHandlers.createCourse,
         config: {
             validate: {
-                payload: Handlers.Validator
+                payload: CoursesHandlers.Validator
             }
         }
     },
     {
-        path: '/',
+        path: '/courses/',
         method: 'PUT',
-        handler: Handlers.updateCourse,
+        handler: CoursesHandlers.updateCourse,
         config: {
             validate: {
-                payload: Handlers.Validator
+                payload: CoursesHandlers.Validator
             }
         }
     },
     {
-        path: '/{dbid}',
+        path: '/courses/{dbid}',
         method: 'DELETE',
-        handler: Handlers.deleteCourse,
+        handler: CoursesHandlers.deleteCourse,
+        config: {
+            validate: {
+                params: {
+                    dbid: Joi.number().integer().min(1)
+                }
+            }
+        }
+    },
+    //tag_types
+    {
+        path: '/tag_types/',
+        method: 'GET',
+        handler: TagsHandlers.findAllTagsTypes,
+        config: {
+            validate: {
+                query: {
+                    limit: Joi.number().integer().min(0).max(100).default(0),
+                    offset: Joi.number().integer().min(1).max(100).default(100)
+                }
+            }
+        }
+    },
+    {
+        path: '/tag_types/{dbid}',
+        method: 'GET',
+        handler: TagsHandlers.findTagTypeByDbid,
+        config: {
+            validate: {
+                params: {
+                    dbid: Joi.number().integer().min(1)
+                }
+            }
+        }
+    },
+    {
+        path: '/tag_types/',
+        method: 'POST',
+        handler: TagsHandlers.createTagType,
+        config: {
+            validate: {
+                payload: TagsHandlers.Validator
+            }
+        }
+    },
+    {
+        path: '/tag_types/',
+        method: 'PUT',
+        handler: TagsHandlers.updateTagType,
+        config: {
+            validate: {
+                payload: TagsHandlers.Validator
+            }
+        }
+    },
+    {
+        path: '/tag_types/{dbid}',
+        method: 'DELETE',
+        handler: TagsHandlers.deleteTagType,
         config: {
             validate: {
                 params: {
