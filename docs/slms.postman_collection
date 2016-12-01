@@ -12,9 +12,9 @@
 			"description": "course",
 			"item": [
 				{
-					"name": "List courses",
+					"name": "courses",
 					"request": {
-						"url": "{{local}}/api/v1/courses/",
+						"url": "{{local}}/api/v1/courses/?limit=0&offset=1",
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -26,14 +26,14 @@
 					"response": []
 				},
 				{
-					"name": "Course by Id",
+					"name": "course",
 					"request": {
-						"url": "{{local}}/api/v1/courses/",
+						"url": "{{local}}/api/v1/courses/4",
 						"method": "GET",
 						"header": [
 							{
 								"key": "dbid",
-								"value": "1",
+								"value": "4",
 								"description": ""
 							}
 						],
@@ -46,9 +46,9 @@
 					"response": []
 				},
 				{
-					"name": "Course",
+					"name": "course",
 					"request": {
-						"url": "{{local}}/api/v1/courses/1",
+						"url": "{{local}}/api/v1/courses/6",
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -60,7 +60,7 @@
 					"response": []
 				},
 				{
-					"name": "Course",
+					"name": "course",
 					"request": {
 						"url": "{{local}}/api/v1/courses/",
 						"method": "POST",
@@ -73,14 +73,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"institution\":1,\n  \"code\":\"HO\", \n  \"name\": \"hola\", \n  \"description\": \"test\" \n}\n\n\n"
+							"raw": "{\n  \"institution\":1,\n  \"code\":\"HO\", \n  \"name\": \"hola\", \n  \"description\": \"test\", \n  \"state\": 2\n}\n\n\n"
 						},
 						"description": "Post"
 					},
 					"response": []
 				},
 				{
-					"name": "Edit Course",
+					"name": "course",
 					"request": {
 						"url": "{{local}}/api/v1/courses/",
 						"method": "PUT",
@@ -93,7 +93,171 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"dbid\":4,\n  \"institution\":1,\n  \"code\":\"OPEN\", \n  \"name\": \"Open English\", \n  \"description\": \"testeo\" \n}\n\n\n"
+							"raw": "{\n  \"dbid\":4,\n  \"institution\":1,\n  \"code\":\"OPEN\", \n  \"name\": \"Open English\", \n  \"description\": \"testeo\",\n  \"state\": 2\n}\n\n\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag_types",
+					"request": {
+						"url": "{{local}}/api/v1/tag_types/?limit=0&offset=5",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": "List tag_types"
+					},
+					"response": []
+				},
+				{
+					"name": "tag_type",
+					"request": {
+						"url": "{{local}}/api/v1/tag_types/2",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": "tag_types"
+					},
+					"response": []
+				},
+				{
+					"name": "tag_type",
+					"request": {
+						"url": "{{local}}/api/v1/tag_types/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"test2\", \n  \"description\": \"test33\"\n}\n\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag_type",
+					"request": {
+						"url": "{{local}}/api/v1/tag_types/",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dbid\":3,\n  \"name\": \"Prueba2\", \n  \"description\": \"testeo2\"\n}"
+						},
+						"description": "tag_types"
+					},
+					"response": []
+				},
+				{
+					"name": "tag_type",
+					"request": {
+						"url": "{{local}}/api/v1/tag_types/3",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag",
+					"request": {
+						"url": "{{local}}/api/v1/tags/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"uno\", \n  \"description\": \"uno ds\",\n  \"tag_type\": 2\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag",
+					"request": {
+						"url": "{{local}}/api/v1/tags/",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"uno\",\n  \"description\": \"uno test\",\n  \"tag_type\": 2,\n  \"dbid\": 2\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag",
+					"request": {
+						"url": "{{local}}/api/v1/tags/2",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag",
+					"request": {
+						"url": "{{local}}/api/v1/tags/1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tags",
+					"request": {
+						"url": "{{local}}/api/v1/tags/?limit=0&offset=5",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
 						},
 						"description": ""
 					},
