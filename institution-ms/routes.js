@@ -63,7 +63,7 @@ module.exports = [
         }
     },
     {
-        path: 'institutions/{dbidInstitution}/file/',
+        path: 'institutions/{instition}/file/',
         method: 'POST',
         handler: Handlers.createLicenseType,
         config: {
@@ -73,7 +73,7 @@ module.exports = [
         }
     },
     {
-        path: 'institutions/{dbidInstitution}/file/{dbid}',
+        path: 'institutions/{institution}/file/{dbid}',
         method: 'PUT',
         handler: Handlers.updateLicenseType,
         config: {
@@ -84,7 +84,7 @@ module.exports = [
     },
 
     {
-        path: 'institutions/{dbidInstitution}/file/{dbid}',
+        path: 'institutions/{institution}/file/{dbid}',
         method: 'DELETE',
         handler: Handlers.deleteLicenseType,
         config: {
@@ -96,7 +96,7 @@ module.exports = [
         }
     },
     {
-        path: 'institutions/{dbidInstitution}/file/',
+        path: 'institutions/{institution}/file/',
         method: 'GET',
         handler: Handlers.findAllLicenseType,
         config: {
@@ -109,7 +109,7 @@ module.exports = [
         }
     },
     {
-        path: 'institutions/{dbidInstitution}/file/{dbid}',
+        path: 'institutions/{institution}/file/{dbid}',
         method: 'GET',
         handler: Handlers.findLicenseTypeByDbid,
         config: {

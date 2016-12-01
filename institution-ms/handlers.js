@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 
-exports.ValidatorLicense = Joi.object().keys({
+exports.ValidatorInstitution = Joi.object().keys({
     dbid: Joi.number().optional(),
     code: Joi.string().optional(),
     name: Joi.string().optional(),
@@ -17,7 +17,7 @@ exports.createInstitution = function (request, reply) {
         code: request.payload.code,
         name: request.payload.name,
         description: request.payload.description,
-        state: request.payload.state,
+        state: 'ACTIVE',
         institution: request.payload.institution
     }
 
@@ -119,7 +119,7 @@ exports.createInstitutionFile = function (request, reply) {
     const licenseType = {
         file: request.payload.file,
         institution: request.payload.institution,        
-        state: request.payload.state
+        state: 'ACTIVE'
 
     }
 
@@ -143,7 +143,7 @@ exports.updateInstitutionFile = function (request, reply) {
         type: request.payload.type
     }
 
-    request.app.db.query('UPDATE LICENSE SET file = type = :type ' +
+    request.app.db.query('UPDATE LICENSE SET file = :file  ' +
         'WHERE file = :file AND institution = :institution', licenseType, (err, result) => {
             if (err) {
                 throw err;
@@ -159,9 +159,10 @@ exports.deleteInstitutionFile = function (request, reply) {
     const licenseType = {
         file: request.params.file,
         institution: request.params.institution,
+        state: 'DELETED'
     };
 
-    request.app.db.query('DELETE INSTITUTION_FILE ' +
+    request.app.db.query('UPDATE INSTITUTION_FILE SET state = :state' +
         ' WHERE file = :file AND institution = :institution', licenseType, (err, result) => {
             if (err) {
                 throw err;
@@ -172,10 +173,13 @@ exports.deleteInstitutionFile = function (request, reply) {
 // Find all INSTITUTION_FILE
 exports.findAllInstitutionFile = function (request, reply) {
     const pagination = {
+        institution : request.params.institution,
+        state: 'ACTIVE',
         limit: request.query.limit,
         offset: request.query.offset
     }
-    request.app.db.query('SELECT * FROM INSTITUTION_FILE LIMIT :limit, :offset', pagination, (err, rows, fields) => {
+    request.app.db.query('SELECT * FROM INSTITUTION_FILE '+
+    'WHERE institution = :institution AND state =:state LIMIT :limit, :offset', pagination, (err, rows, fields) => {
         if (err) {
             throw err;
         }
@@ -185,10 +189,12 @@ exports.findAllInstitutionFile = function (request, reply) {
 // Find INSTITUTION_FILE by dbid
 exports.findInstitutionFileByDbid = function (request, reply) {
     const params = {
-        dbid: request.params.dbid
+        file: request.params.file,
+        institution: request.params.institution,
+        state:'ACTIVE'
     };
     request.app.db.query('SELECT * FROM INSTITUTION_FILE ' +
-        'WHERE file = :file AND institution = :institution', params, (err, rows, fields) => {
+        'WHERE file = :file AND institution = :institution AND state = :state', params, (err, rows, fields) => {
             if (err) {
                 throw err;
             }
