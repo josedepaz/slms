@@ -4,6 +4,7 @@ const Joi = require('joi');
 
 //const Handlers = require('./handlers');
 const CoursesHandlers = require('./courses.handlers');
+const TagsTypesHandlers = require('./tagsTypes.handlers');
 const TagsHandlers = require('./tags.handlers');
 
 module.exports = [
@@ -69,7 +70,7 @@ module.exports = [
     {
         path: '/tag_types/',
         method: 'GET',
-        handler: TagsHandlers.findAllTagsTypes,
+        handler: TagsTypesHandlers.findAllTagsTypes,
         config: {
             validate: {
                 query: {
@@ -82,7 +83,7 @@ module.exports = [
     {
         path: '/tag_types/{dbid}',
         method: 'GET',
-        handler: TagsHandlers.findTagTypeByDbid,
+        handler: TagsTypesHandlers.findTagTypeByDbid,
         config: {
             validate: {
                 params: {
@@ -94,17 +95,65 @@ module.exports = [
     {
         path: '/tag_types/',
         method: 'POST',
-        handler: TagsHandlers.createTagType,
+        handler: TagsTypesHandlers.createTagType,
         config: {
             validate: {
-                payload: TagsHandlers.Validator
+                payload: TagsTypesHandlers.Validator
             }
         }
     },
     {
         path: '/tag_types/',
         method: 'PUT',
-        handler: TagsHandlers.updateTagType,
+        handler: TagsTypesHandlers.updateTagType,
+        config: {
+            validate: {
+                payload: TagsTypesHandlers.Validator
+            }
+        }
+    },
+    {
+        path: '/tag_types/{dbid}',
+        method: 'DELETE',
+        handler: TagsTypesHandlers.deleteTagType,
+        config: {
+            validate: {
+                params: {
+                    dbid: Joi.number().integer().min(1)
+                }
+            }
+        }
+    },
+    //tags
+    {
+        path: '/tags/',
+        method: 'GET',
+        handler: TagsHandlers.findAllTags,
+        config: {
+            validate: {
+                query: {
+                    limit: Joi.number().integer().min(0).max(100).default(0),
+                    offset: Joi.number().integer().min(1).max(100).default(100)
+                }
+            }
+        }
+    },
+    {
+        path: '/tags/{dbid}',
+        method: 'GET',
+        handler: TagsHandlers.findTagByDbid,
+        config: {
+            validate: {
+                params: {
+                    dbid: Joi.number().integer().min(1)
+                }
+            }
+        }
+    },
+    {
+        path: '/tags/',
+        method: 'POST',
+        handler: TagsHandlers.createTag,
         config: {
             validate: {
                 payload: TagsHandlers.Validator
@@ -112,9 +161,19 @@ module.exports = [
         }
     },
     {
-        path: '/tag_types/{dbid}',
+        path: '/tags/',
+        method: 'PUT',
+        handler: TagsHandlers.updateTag,
+        config: {
+            validate: {
+                payload: TagsHandlers.Validator
+            }
+        }
+    },
+    {
+        path: '/tags/{dbid}',
         method: 'DELETE',
-        handler: TagsHandlers.deleteTagType,
+        handler: TagsHandlers.deleteTag,
         config: {
             validate: {
                 params: {

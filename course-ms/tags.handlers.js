@@ -5,16 +5,17 @@ const Joi = require('joi');
 exports.Validator = Joi.object().keys({
     dbid: Joi.number().optional(),
     name: Joi.string().required(),
-    description: Joi.string().optional()
+    description: Joi.string().optional(),
+    tag_type: Joi.number().required()
 });
 
-// Find all TagsTypes
-exports.findAllTagsTypes = function (request, reply) {
+// Find all Tags
+exports.findAllTags = function (request, reply) {
     const pagination = {
         limit: request.query.limit,
         offset: request.query.offset
     }
-    request.app.db.query('SELECT * FROM TAG_TYPE LIMIT :limit, :offset', pagination, (err, rows, fields) => {
+    request.app.db.query('SELECT * FROM TAG LIMIT :limit, :offset', pagination, (err, rows, fields) => {
        
         if (err) {
             throw err;
@@ -23,12 +24,12 @@ exports.findAllTagsTypes = function (request, reply) {
     });
 }
 
-// Find TagType by dbid
-exports.findTagTypeByDbid = function (request, reply) {
+// Find Tag by dbid
+exports.findTagByDbid = function (request, reply) {
 
     const params = { dbid: request.params.dbid };
 
-    request.app.db.query('SELECT * FROM TAG_TYPE WHERE dbid = :dbid', params, (err, rows, fields) => {
+    request.app.db.query('SELECT * FROM TAG WHERE dbid = :dbid', params, (err, rows, fields) => {
         if (err) {
             throw err;
         }
@@ -37,50 +38,52 @@ exports.findTagTypeByDbid = function (request, reply) {
 
 }
 
-// Create a new TagType
-exports.createTagType = function (request, reply) {
-    const TagType = {
+// Create a new Tag
+exports.createTag = function (request, reply) {
+    const Tag = {
         name: request.payload.name,
-        description: request.payload.description
+        description: request.payload.description,
+        tag_type: request.payload.tag_type
     }
 
-    request.app.db.query('INSERT INTO TAG_TYPE (name, description) VALUES (:name, :description)', TagType, (err, result) => {
+    request.app.db.query('INSERT INTO TAG (name, description, tag_type) VALUES (:name, :description, :tag_type)', Tag, (err, result) => {
         if (err) {
             throw err;
         }
         if (result.insertId){
-            TagType.dbid = result.insertId;
+            Tag.dbid = result.insertId;
         }
-        reply(TagType);
+        reply(Tag);
     });
 }
 
-// Update a existent TagType
-exports.updateTagType = function (request, reply) {
-    const TagType = {
+// Update a existent Tag
+exports.updateTag = function (request, reply) {
+    const Tag = {
         dbid: request.payload.dbid,
         name: request.payload.name,
-        description: request.payload.description
+        description: request.payload.description,
+        tag_type: request.payload.tag_type
     }
 
-    request.app.db.query('UPDATE TAG_TYPE SET  name = :name, description = :description WHERE dbid = :dbid', TagType, (err, result) => {
+    request.app.db.query('UPDATE TAG SET  name = :name, description = :description, tag_type = :tag_type WHERE dbid = :dbid', Tag, (err, result) => {
         if (err) {
             throw err;
         }
-        reply(TagType);
+        reply(Tag);
     });
 }
 
-// Delete a existent TagType
-exports.deleteTagType = function (request, reply) {
-    const TagType = {
+// Delete a existent Tag
+exports.deleteTag = function (request, reply) {
+    const Tag = {
         dbid: request.params.dbid
     };
 
-    request.app.db.query('DELETE FROM TAG_TYPE WHERE dbid = :dbid', TagType, (err, result) => {
+    request.app.db.query('DELETE FROM TAG WHERE dbid = :dbid', Tag, (err, result) => {
         if (err) {
             throw err;
         }
-        reply(TagType);
+        reply(Tag);
     });
 }

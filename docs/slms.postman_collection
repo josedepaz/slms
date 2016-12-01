@@ -12,7 +12,7 @@
 			"description": "course",
 			"item": [
 				{
-					"name": "List courses",
+					"name": "courses",
 					"request": {
 						"url": "{{local}}/api/v1/courses/?limit=0&offset=1",
 						"method": "GET",
@@ -100,7 +100,7 @@
 					"response": []
 				},
 				{
-					"name": "List tag_types",
+					"name": "tag_types",
 					"request": {
 						"url": "{{local}}/api/v1/tag_types/?limit=0&offset=5",
 						"method": "GET",
@@ -114,7 +114,7 @@
 					"response": []
 				},
 				{
-					"name": "tag_types",
+					"name": "tag_type",
 					"request": {
 						"url": "{{local}}/api/v1/tag_types/2",
 						"method": "GET",
@@ -148,7 +148,7 @@
 					"response": []
 				},
 				{
-					"name": "tag_types",
+					"name": "tag_type",
 					"request": {
 						"url": "{{local}}/api/v1/tag_types/",
 						"method": "PUT",
@@ -168,10 +168,92 @@
 					"response": []
 				},
 				{
-					"name": "tag_types",
+					"name": "tag_type",
 					"request": {
 						"url": "{{local}}/api/v1/tag_types/3",
 						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag",
+					"request": {
+						"url": "{{local}}/api/v1/tags/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"uno\", \n  \"description\": \"uno ds\",\n  \"tag_type\": 2\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag",
+					"request": {
+						"url": "{{local}}/api/v1/tags/",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"uno\",\n  \"description\": \"uno test\",\n  \"tag_type\": 2,\n  \"dbid\": 2\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag",
+					"request": {
+						"url": "{{local}}/api/v1/tags/2",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tag",
+					"request": {
+						"url": "{{local}}/api/v1/tags/1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "tags",
+					"request": {
+						"url": "{{local}}/api/v1/tags/?limit=0&offset=5",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "formdata",
