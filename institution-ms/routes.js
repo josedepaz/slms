@@ -63,9 +63,9 @@ module.exports = [
         }
     },
     {
-        path: 'institutions/{instition}/file/',
+        path: 'institutions/{institution}/file/',
         method: 'POST',
-        handler: Handlers.createLicenseType,
+        handler: Handlers.createInstitutionFile,
         config: {
             validate: {
                 payload: Handlers.ValidatorLicenseType
@@ -75,10 +75,10 @@ module.exports = [
     {
         path: 'institutions/{institution}/file/{dbid}',
         method: 'PUT',
-        handler: Handlers.updateLicenseType,
+        handler: Handlers.updateInstitutionFile,
         config: {
             validate: {
-                payload: Handlers.ValidatorLicenseType
+                payload: Handlers.ValidatorInstitutionFile
             }
         }
     },
@@ -86,7 +86,7 @@ module.exports = [
     {
         path: 'institutions/{institution}/file/{dbid}',
         method: 'DELETE',
-        handler: Handlers.deleteLicenseType,
+        handler: Handlers.deleteInstitutionFile,
         config: {
             validate: {
                 params: {
@@ -98,7 +98,7 @@ module.exports = [
     {
         path: 'institutions/{institution}/file/',
         method: 'GET',
-        handler: Handlers.findAllLicenseType,
+        handler: Handlers.findAllInstitutionFile,
         config: {
             validate: {
                 query: {
@@ -111,7 +111,7 @@ module.exports = [
     {
         path: 'institutions/{institution}/file/{dbid}',
         method: 'GET',
-        handler: Handlers.findLicenseTypeByDbid,
+        handler: Handlers.findInstitutionFileByDbid,
         config: {
             validate: {
                 params: {
